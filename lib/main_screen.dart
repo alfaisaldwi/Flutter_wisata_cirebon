@@ -10,9 +10,10 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   TextEditingController cWisata = TextEditingController();
   TextEditingController cAlamat = TextEditingController();
-  TextEditingController cWisata = TextEditingController();
-  TextEditingController cWisata = TextEditingController();
-  TextEditingController cWisata = TextEditingController();
+  TextEditingController cDeskripsi  = TextEditingController();
+  TextEditingController cHari = TextEditingController();
+  TextEditingController cJam = TextEditingController();
+  TextEditingController cHarga = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
