@@ -10,7 +10,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   TextEditingController cWisata = TextEditingController();
   TextEditingController cAlamat = TextEditingController();
-  TextEditingController cDeskripsi  = TextEditingController();
+  TextEditingController cDeskripsi = TextEditingController();
   TextEditingController cHari = TextEditingController();
   TextEditingController cJam = TextEditingController();
   TextEditingController cHarga = TextEditingController();
@@ -21,10 +21,13 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
         title: Text('Rekomendasi Wisata Cirebon'),
       ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: ListView.builder(
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            ListView.builder(
+              scrollDirection: Axis.vertical,
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
               itemCount: tourismPlaceList.length,
               itemBuilder: (context, index) {
                 final TourismPlace place = tourismPlaceList[index];
@@ -66,12 +69,98 @@ class _MainScreenState extends State<MainScreen> {
                 );
               },
             ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          TextFormField(),
-        ],
+            SizedBox(
+              height: 30,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Form Tambah Wisata',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            SizedBox(
+              height: 14,
+            ),
+            Padding(
+              padding: EdgeInsets.all(6),
+              child: TextField(
+                controller: cWisata,
+                decoration: InputDecoration(
+                    hintText: 'Wisata',
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 2, color: Colors.black),
+                        borderRadius: BorderRadius.all(Radius.circular(2)))),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: TextField(
+                controller: cAlamat,
+                decoration: const InputDecoration(
+                    hintText: 'Alamat',
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 2, color: Colors.black),
+                        borderRadius: BorderRadius.all(Radius.circular(2)))),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: TextField(
+                controller: cDeskripsi,
+                decoration: const InputDecoration(
+                    hintText: 'Deskripsi',
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 2, color: Colors.black),
+                        borderRadius: BorderRadius.all(Radius.circular(2)))),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: TextField(
+                controller: cHari,
+                decoration: const InputDecoration(
+                    hintText: 'Hari Buka',
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 2, color: Colors.black),
+                        borderRadius: BorderRadius.all(Radius.circular(2)))),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: TextField(
+                controller: cJam,
+                decoration: const InputDecoration(
+                    hintText: 'Jam Kerja',
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 2, color: Colors.black),
+                        borderRadius: BorderRadius.all(Radius.circular(2)))),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: TextField(
+                controller: cHarga,
+                decoration: const InputDecoration(
+                    hintText: 'Harga Masuk',
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 2, color: Colors.black),
+                        borderRadius: BorderRadius.all(Radius.circular(2)))),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(6),
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.all(6),
+                    backgroundColor: Colors.blueAccent),
+                child: Text('Tambah Data'),
+                onPressed: () {},
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
