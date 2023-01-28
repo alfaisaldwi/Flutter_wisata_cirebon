@@ -109,6 +109,12 @@ class HelperData {
     return photos;
   }
 
+  Future deleteNote(int? id) async {
+    var dbClient = await db;
+    return await dbClient.delete(Table_Data, where: '$id = ?', whereArgs: [id]);
+//    return await dbClient.rawDelete('DELETE FROM $tableNote WHERE $columnId = $id');
+  }
+
   Future close() async {
     var dbClient = await db;
     dbClient.close();

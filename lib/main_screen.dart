@@ -22,7 +22,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-
   List items = [];
   Future<File>? imageFile;
   Image? image;
@@ -30,6 +29,7 @@ class _MainScreenState extends State<MainScreen> {
   List<Photo>? images;
 
   Photo? photo;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -45,7 +45,13 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-
+  _deleteNote(BuildContext context, Photo photo, int position) async {
+    dbhelper!.deleteNote(photo.id).then((photos) {
+      setState(() {
+        items.removeAt(position);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +62,7 @@ class _MainScreenState extends State<MainScreen> {
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => FormPage(),
@@ -109,6 +115,14 @@ class _MainScreenState extends State<MainScreen> {
                               ],
                             ),
                           ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 50, right: 20),
+                          child: IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                _deleteNote(context, items[index], index);
+                              }),
                         )
                       ],
                     ),
@@ -121,6 +135,4 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
-
-  
 }

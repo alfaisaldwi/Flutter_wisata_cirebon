@@ -143,11 +143,11 @@ class _FormPageState extends State<FormPage> {
                 onPressed: () async {
                   await pickImageFromGallery();
 
-                  Navigator.pushReplacement(
+                  Navigator.pushReplacement( 
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MainScreen(),
-                      ));
+                        builder: (context) => MainScreen(), 
+                      ),);
                 },
               ),
             )
