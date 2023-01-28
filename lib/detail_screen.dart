@@ -1,23 +1,27 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-import 'model/tourism_place.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:wisata_cirebon/model/photo.dart';
 
 var informationTextStyle = TextStyle(fontFamily: 'Oxygen');
 
 class DetailScreen extends StatelessWidget {
-  final TourismPlace place;
+  final Photo photo;
 
-  DetailScreen({required this.place});
+  DetailScreen({required this.photo});
 
   @override
   Widget build(BuildContext context) {
+    Uint8List bytes = base64Decode('${photo.photoName}');
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Stack(children: [
-              Image.asset(place.imageAsset),
+              Image.memory(bytes),
               SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -44,7 +48,7 @@ class DetailScreen extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(top: 16.0),
               child: Text(
-                place.name,
+                '${photo.wisata}',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 30.0,
@@ -64,7 +68,7 @@ class DetailScreen extends StatelessWidget {
                         height: 8.0,
                       ),
                       Text(
-                        place.openDays,
+                        '${photo.hari}',
                         style: informationTextStyle,
                       ),
                     ],
@@ -76,7 +80,7 @@ class DetailScreen extends StatelessWidget {
                         height: 8.0,
                       ),
                       Text(
-                        place.openTime,
+                        '${photo.jam}',
                         style: informationTextStyle,
                       ),
                     ],
@@ -88,7 +92,7 @@ class DetailScreen extends StatelessWidget {
                         height: 8.0,
                       ),
                       Text(
-                        place.ticketPrice,
+                        'Rp. ${photo.harga}',
                         style: informationTextStyle,
                       ),
                     ],
@@ -99,7 +103,7 @@ class DetailScreen extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(16.0),
               child: Text(
-                place.description,
+                '${photo.deskripsi}',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16.0,
@@ -107,21 +111,21 @@ class DetailScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              height: 150,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: place.imageUrls.map((url) {
-                  return Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.network(url),
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
+            // Container(
+            //   height: 150,
+            //   child: ListView(
+            //     scrollDirection: Axis.horizontal,
+            //     children: photo.imageUrls.map((url) {
+            //       return Padding(
+            //         padding: const EdgeInsets.all(4.0),
+            //         child: ClipRRect(
+            //           borderRadius: BorderRadius.circular(10),
+            //           child: Image.network(url),
+            //         ),
+            //       );
+            //     }).toList(),
+            //   ),
+            // ),
           ],
         ),
       ),

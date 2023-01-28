@@ -33,6 +33,9 @@ dependencies:
   path_provider: ^2.0.12
   alert_dialog: ^1.0.1
   image_picker: ^0.8.6+1
+  utility: ^1.0.3
+  shared_preferences: ^2.0.17
+  file_picker: ^4.6.1
   
 
 dev_dependencies:

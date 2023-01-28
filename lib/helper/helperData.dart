@@ -4,20 +4,22 @@ import 'package:sqflite/sqflite.dart';
 import 'dart:io' as io;
 
 import 'package:wisata_cirebon/model/user_model.dart';
+import 'package:wisata_cirebon/model/photo.dart';
 
-class helperData {
+class HelperData {
   static Database? _db;
   static const DB_Name = 'datadb';
 
   static const String Table_Data = 'dataWisata';
   static const int Version = 1;
-
+  static const String c_id = 'id';
   static const String c_wisata = 'wisata';
   static const String c_alamat = 'alamat';
   static const String c_deskripsi = 'deskripsi';
   static const String c_hari = 'hari';
   static const String c_jam = 'jam';
   static const String c_harga = 'harga';
+  static const String c_photo = 'photoName';
 
   Future<Database> get db async {
     if (_db != null) {
@@ -30,39 +32,85 @@ class helperData {
 
   initDb() async {
     io.Directory documentDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentDirectory.path, helperData.DB_Name);
+    String path = join(documentDirectory.path, HelperData.DB_Name);
     var db = await openDatabase(path,
-        version: helperData.Version, onCreate: _onCreate);
+        version: HelperData.Version, onCreate: _onCreate);
     return db;
   }
 
   _onCreate(Database db, int intVersion) async {
     await db.execute('CREATE TABLE $Table_Data ('
-        'id INTEGER NOT NULL PRIMARY KEY,'
+        '$c_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,'
         '$c_wisata TEXT NOT NULL,'
         '$c_alamat TEXT NOT NULL,'
-        '$c_deskripsi TEXT NOT NULL'
-        '$c_hari TEXT NOT NULL'
-        '$c_jam TEXT NOT NULL'
-        '$c_harga TEXT NOT NULL'
+        '$c_deskripsi TEXT NOT NULL,'
+        '$c_hari TEXT NOT NULL,'
+        '$c_jam TEXT NOT NULL,'
+        '$c_harga TEXT NOT NULL,'
+        '$c_photo TEXT NOT NULL'
         ')');
   }
 
-  Future<int> saveData(UserModel user) async {
+  Future<int> savePhoto(Photo photo) async {
     var dbClient = await db;
-    var res = await dbClient.insert(Table_Data, user.toMap());
-    return res;
+    var result = await dbClient.insert(Table_Data, photo.toMap());
+    return result;
   }
 
-  // Future<UserModel> getLogin(String username, String password) async {
-  //   var dbClient = await db;
-  //   var res = await dbClient.rawQuery("SELECT * FROM $Table_User WHERE "
-  //       "$c_username = '$username' AND "
-  //       "$c_password = '$password'");
+  Future getAllData() async {
+    var dbClient = await db;
+    var result = await dbClient.query(Table_Data,
+        columns: [
+          c_id,
+          c_wisata,
+          c_alamat,
+          c_alamat,
+          c_deskripsi,
+          c_hari,
+          c_jam,
+          c_harga,
+          c_photo
+        ],
+        limit: 500);
+//    var result = await dbClient.rawQuery('SELECT * FROM $tableNote');
 
-  //   if (res.length > 0) {
-  //     return UserModel.fromMap(res.first);
-  //   }
-  //   return null!;
+    return result.toList();
+  }
+
+  // Future<int> saveData(UserModel user) async {
+  //   var dbClient = await db;
+  //   var res = await dbClient.insert(Table_Data, user.toMap());
+  //   return res;
   // }
+
+  // Future<int> imageSpec(Photo photo) async {
+  //   var dbClient = await db;
+  //   var result = db.update(Table_Data, photo.toMap(), where: '$id' )
+  // }
+
+  Future<List<Photo>> getData() async {
+    var dbClient = await db;
+    List<Map> maps = await dbClient.query(Table_Data, columns: [
+      c_id,
+      c_wisata,
+      c_alamat,
+      c_deskripsi,
+      c_hari,
+      c_jam,
+      c_harga,
+      c_photo
+    ]);
+    List<Photo> photos = [];
+    if (maps.length > 0) {
+      for (var i = 0; i < maps.length; i++) {
+        photos.add(Photo.fromMap(maps[i]));
+      }
+    }
+    return photos;
+  }
+
+  Future close() async {
+    var dbClient = await db;
+    dbClient.close();
+  }
 }

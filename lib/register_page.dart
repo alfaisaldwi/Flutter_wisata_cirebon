@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:toast/toast.dart';
 import 'package:wisata_cirebon/helper/dbHelper.dart';
+import 'package:wisata_cirebon/main.dart';
 import 'package:wisata_cirebon/model/user_model.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -85,8 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  void signUp() async{
-
+  void signUp() async {
     String umail = c_email.text;
     String uname = c_username.text;
     String upassword = c_password.text;
@@ -108,6 +108,11 @@ class _RegisterPageState extends State<RegisterPage> {
       UserModel uModel = UserModel(umail, uname, upassword);
       await dbhelper.saveData(uModel).then((userData) {
         print(userData);
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Home(),
+            ));
         // alert(context, content: Text('Register Sukses'));
       }).catchError((error) {
         print(error);

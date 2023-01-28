@@ -68,4 +68,6 @@ class dbHelper {
     }
     return null!;
   }
+
+  static void refreshImages() {}
 }

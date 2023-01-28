@@ -76,21 +76,28 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
-              ElevatedButton(
-                  onPressed: () {
-                    login();
-                  },
-                  child: Text("LOGIN")),
-              Padding(padding: EdgeInsets.all(20)),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RegisterPage(),
-                        ));
-                  },
-                  child: Text("Create Accout")),
+              Container(
+                padding: EdgeInsets.all(10),
+                width: double.infinity,
+                child: ElevatedButton(
+                    onPressed: () {
+                      login();
+                    },
+                    child: Text("LOGIN")),
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                width: double.infinity,
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RegisterPage(),
+                          ));
+                    },
+                    child: Text("Create Accout")),
+              ),
             ],
           ),
         ),
@@ -113,10 +120,8 @@ class _HomeState extends State<Home> {
     } else {
       await dbhelper.getLogin(uname, upassword).then((userData) {
         if (userData != null) {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => MainScreen()),
-              (Route<dynamic> route) => false);
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => MainScreen()));
         }
         print('---------------- ${userData.email}');
       }).catchError((error) {
