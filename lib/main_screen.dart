@@ -33,11 +33,14 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
     images = [];
+    items.length;
+    super.initState();
+
     dbhelper = HelperData();
     dbhelper?.getAllData().then((photo) {
       setState(() {
+        items.length;
         photo.forEach((photo) {
           items.add(Photo.fromMap(photo));
         });
@@ -82,6 +85,7 @@ class _MainScreenState extends State<MainScreen> {
               itemBuilder: (context, index) {
                 // final TourismPlace place = tourismPlaceList[index];
                 Uint8List bytes = base64Decode(items[index].photoName);
+                print(items.length);
                 return InkWell(
                   onTap: () {
                     Navigator.push(context,

@@ -58,6 +58,7 @@ class HelperData {
   }
 
   Future getAllData() async {
+     
     var dbClient = await db;
     var result = await dbClient.query(Table_Data,
         columns: [
