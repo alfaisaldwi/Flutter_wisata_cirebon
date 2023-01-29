@@ -33,15 +33,11 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     // TODO: implement initState
-
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
     images = [];
     items.length;
+    super.initState();
+
+    dbhelper = HelperData();
     dbhelper?.getAllData().then((photo) {
       setState(() {
         items.length;
@@ -51,6 +47,19 @@ class _MainScreenState extends State<MainScreen> {
       });
     });
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   dbhelper?.getAllData().then((photo) {
+  //     setState(() {
+  //       items.length;
+  //       photo.forEach((photo) {
+  //         items.add(Photo.fromMap(photo));
+  //       });
+  //     });
+  //   });
+  // }
 
   _deleteNote(BuildContext context, Photo photo, int position) async {
     dbhelper!.deleteNote(photo.id).then((photos) {
