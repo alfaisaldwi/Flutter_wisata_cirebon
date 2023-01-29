@@ -58,7 +58,6 @@ class HelperData {
   }
 
   Future getAllData() async {
-     
     var dbClient = await db;
     var result = await dbClient.query(Table_Data,
         columns: [
@@ -72,7 +71,7 @@ class HelperData {
           c_harga,
           c_photo
         ],
-        limit: 500);
+        limit: 10000);
 //    var result = await dbClient.rawQuery('SELECT * FROM $tableNote');
 
     return result.toList();

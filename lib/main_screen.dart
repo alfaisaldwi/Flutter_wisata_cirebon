@@ -33,11 +33,15 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     // TODO: implement initState
+
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     images = [];
     items.length;
-    super.initState();
-
-    dbhelper = HelperData();
     dbhelper?.getAllData().then((photo) {
       setState(() {
         items.length;
